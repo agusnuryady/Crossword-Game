@@ -7,7 +7,7 @@ import Axios from 'axios'
 import LinearGradient from 'react-native-linear-gradient'
 import styles from './styles'
 
-const Global = require('../component/Global')
+const Global = require('../../component/Global')
 const url = Global.URL
 
 var {width,height}=Dimensions.get('window')
@@ -38,7 +38,7 @@ export default class Home extends Component {
                             <View style={styles.headerBox} >
                                 <Image
                                     style={styles.image}
-                                    source={require('../component/img/crossword-logo.png')}/>
+                                    source={require('../../component/img/crossword-logo.png')}/>
                                 <Text style={styles.text1} >
                                     CROSSWORD PUZZLE
                                 </Text>
@@ -48,7 +48,7 @@ export default class Home extends Component {
                             <View style={styles.avatarBox} >
                                 <Thumbnail
                                     style={styles.avatar}
-                                    source={require('../component/img/avatar-profile.jpg')} />
+                                    source={require('../../component/img/avatar-profile.jpg')} />
                             </View>
                             <View style={styles.usernameBox} >
                                 <View style={styles.usernameitem1} >
@@ -77,7 +77,7 @@ export default class Home extends Component {
                             <View style={styles.menuItemBox} >
                                 <Thumbnail
                                     small
-                                    source={require('../component/img/check-icon.png')}
+                                    source={require('../../component/img/check-icon.png')}
                                     style={styles.menuItemThumbnail} />
                                 <Text style={styles.menuItemText} >
                                     Animal Names
@@ -100,7 +100,7 @@ export default class Home extends Component {
                             <View style={styles.menuItemBox} >
                                 <Thumbnail
                                     small
-                                    source={require('../component/img/check-icon.png')}
+                                    source={require('../../component/img/check-icon.png')}
                                     style={styles.menuItemThumbnail} />
                                 <Text style={styles.menuItemText} >
                                     Country Names

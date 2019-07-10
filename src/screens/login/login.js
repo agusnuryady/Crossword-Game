@@ -6,9 +6,9 @@ import AsyncStorage from '@react-native-community/async-storage'
 import axios from 'axios'
 import LinearGradient from 'react-native-linear-gradient'
 import styles from './styles'
-import {storageData} from '../utils'
+import {storageData} from '../../utils'
 
-const Global = require('../component/Global')
+const Global = require('../../component/Global')
 const url = Global.URL
 
 var {width,height}=Dimensions.get('window')
@@ -28,9 +28,10 @@ export default class Login extends Component {
         }
 
         try {
-            let auth = await axios.post(`${url}login`, {email: this.state.email, password: this.state.password})
-            let token = auth.data.token
-            await storageData.saveKey('token', token)
+            // let auth = await axios.post(`${url}login`, {email: this.state.email, password: this.state.password})
+            // let token = auth.data.token
+            // await storageData.saveKey('token', token)
+            this.props.navigation.navigate('Home')
         } catch(e) {
             alert(e.response.data.message)
         }
@@ -64,7 +65,7 @@ export default class Login extends Component {
                     <View style={styles.contentItem} >
                         <Image
                             style={styles.image}
-                            source={require('../component/img/crossword-logo.png')}/>
+                            source={require('../../component/img/crossword-logo.png')}/>
                         <Text style={styles.text1} >
                             CROSSWORD PUZZLE
                         </Text>
