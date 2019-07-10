@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 import Axios from 'axios'
 import LinearGradient from 'react-native-linear-gradient'
 import styles from './styles'
-import {storageData} from '../utils'
+import {storageData} from '../../utils'
 
 const Global = require('../../component/Global')
 const url = Global.URL
