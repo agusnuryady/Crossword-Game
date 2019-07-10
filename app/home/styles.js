@@ -17,10 +17,19 @@ const styles = StyleSheet.create({
         paddingTop:5,
         fontWeight:'bold'
     },
+    headerButton: {
+        position:'absolute',
+        top:17,
+        right:17
+    },
+    headerButtonIcon: {
+        color:'gray',
+        fontSize:25
+    },
     header: {
         width:width, 
         elevation:5, 
-        borderBottomRightRadius:80,
+        borderBottomRightRadius:0,
         borderBottomLeftRadius:80, 
         backgroundColor:'rgba(255,255,255,0.95)'
     },
@@ -93,10 +102,10 @@ const styles = StyleSheet.create({
         alignItems:'center',
         backgroundColor:'rgba(255,255,255,0.97)',
         width:width,
-        height:450,
+        height:440,
         position:'absolute',
         bottom:0,
-        borderTopLeftRadius:80,
+        borderTopLeftRadius:0,
         borderTopRightRadius:80,
         padding:20
     },

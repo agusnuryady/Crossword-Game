@@ -31,6 +31,13 @@ export default class Login extends Component {
             let auth = await axios.post(`${url}login`, {email: this.state.email, password: this.state.password})
             let token = auth.data.token
             await storageData.saveKey('token', token)
+            this.props.navigation.dispatch(StackActions.reset({
+                index: 0,
+                actions: [
+                    NavigationActions.navigate({ routeName: 'Home' })
+                ],
+            }))
+
         } catch(e) {
             alert(e.response.data.message)
         }

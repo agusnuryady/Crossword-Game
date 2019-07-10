@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 import Axios from 'axios'
 import LinearGradient from 'react-native-linear-gradient'
 import styles from './styles'
+import {storageData} from '../utils'
 
 const Global = require('../component/Global')
 const url = Global.URL
@@ -51,21 +52,33 @@ export default class SplashScreen extends Component {
         // })
 
 
-        this.GoTologin()
+        this.GoToApp()
         
-        clearTimeout(this.GoTologin())
+        clearTimeout(this.GoToApp())
     
     }
 
-    GoTologin = () => {
-        setTimeout(()=> {
-            this.props.navigation.dispatch(StackActions.reset({
-                index: 0,
-                actions: [
-                NavigationActions.navigate({ routeName: 'Login' })
-                ],
-            }))
-        }, 3000)
+
+
+    GoToApp = () => {
+        setTimeout( async ()=> {
+            let token = await storageData.getKey('token')
+            if (token) {
+                this.props.navigation.dispatch(StackActions.reset({
+                    index: 0,
+                    actions: [
+                    NavigationActions.navigate({ routeName: 'Home' })
+                    ],
+                }))
+            } else {
+                this.props.navigation.dispatch(StackActions.reset({
+                    index: 0,
+                    actions: [
+                    NavigationActions.navigate({ routeName: 'Login' })
+                    ],
+                }))
+            }
+        }, 2000)
     }
     
     render() {

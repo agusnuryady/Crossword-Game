@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 import Axios from 'axios'
 import LinearGradient from 'react-native-linear-gradient'
 import styles from './styles'
+import {storageData} from '../utils'
 
 const Global = require('../component/Global')
 const url = Global.URL
@@ -19,6 +20,33 @@ export default class Home extends Component {
         this.state={
             passwordInvisible: true,
         }
+    }
+
+    handleLogout(){
+        Alert.alert(
+        '',
+        'Are you sure you want to logout? ',
+        [
+            {
+                text: 'No',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+            },
+            {
+                text:'Yes', 
+                onPress: async ()=> {
+                    await storageData.removeKey('token')
+                    this.props.navigation.dispatch(StackActions.reset({
+                        index: 0,
+                        actions: [
+                        NavigationActions.navigate({ routeName: 'Login' })
+                        ],
+                    }))
+                } 
+            },
+        ],
+        {cancelable:false},
+        )
     }
 
     render() {
@@ -43,6 +71,11 @@ export default class Home extends Component {
                                     CROSSWORD PUZZLE
                                 </Text>
                             </View>
+                            <TouchableOpacity 
+                                onPress={()=> this.handleLogout()}
+                                style={styles.headerButton} >
+                                <Icon name='logout' type='AntDesign' style={styles.headerButtonIcon} />
+                            </TouchableOpacity>
                         </View>
                         <View style={styles.content} >
                             <View style={styles.avatarBox} >
