@@ -6,9 +6,9 @@ import AsyncStorage from '@react-native-community/async-storage'
 import axios from 'axios'
 import LinearGradient from 'react-native-linear-gradient'
 import styles from './styles'
-import {storageData} from '../utils'
+import {storageData} from '../../utils'
 
-const Global = require('../component/Global')
+const Global = require('../../component/Global')
 const url = Global.URL
 
 var {width,height}=Dimensions.get('window')
@@ -34,7 +34,7 @@ export default class Login extends Component {
             this.props.navigation.dispatch(StackActions.reset({
                 index: 0,
                 actions: [
-                    NavigationActions.navigate({ routeName: 'Home' })
+                    NavigationActions.navigate({ routeName: 'Login' })
                 ],
             }))
 
@@ -71,7 +71,7 @@ export default class Login extends Component {
                     <View style={styles.contentItem} >
                         <Image
                             style={styles.image}
-                            source={require('../component/img/crossword-logo.png')}/>
+                            source={require('../../component/img/crossword-logo.png')}/>
                         <Text style={styles.text1} >
                             CROSSWORD PUZZLE
                         </Text>

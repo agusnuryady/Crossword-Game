@@ -7,7 +7,7 @@ import Axios from 'axios'
 import LinearGradient from 'react-native-linear-gradient'
 import styles from './styles'
 
-const Global = require('../component/Global')
+const Global = require('../../component/Global')
 const url = Global.URL
 
 var {width,height}=Dimensions.get('window')
@@ -36,7 +36,7 @@ export default class Register extends Component {
                     <View style={styles.contentItem} >
                         <Image
                             style={styles.image}
-                            source={require('../component/img/crossword-logo.png')}/>
+                            source={require('../../component/img/crossword-logo.png')}/>
                         <Text style={styles.text1} >
                             CROSSWORD PUZZLE
                         </Text>
