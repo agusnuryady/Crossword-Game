@@ -1,0 +1,2 @@
+export const GET_LIST_CROSSWORDS = 'GET_LIST_CROSSWORDS'
+export const GET_BOARD = 'GET_BOARD'
