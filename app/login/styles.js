@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
     },
     inputText: {
         fontSize: 18,
-        color: 'black'
+        color: 'black',
+        width:240
     },
     inputText2: {
         fontSize: 18,
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
         paddingHorizontal:7
     },
     text3: {
-        fontWeight:'bold', 
+        fontWeight:'bold',
         fontSize:15
     }
 })

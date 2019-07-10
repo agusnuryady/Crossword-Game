@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 import axios from 'axios'
 import LinearGradient from 'react-native-linear-gradient'
 import styles from './styles'
+import {storageData} from '../utils'
 
 const Global = require('../component/Global')
 const url = Global.URL
@@ -29,7 +30,7 @@ export default class Login extends Component {
         try {
             let auth = await axios.post(`${url}login`, {email: this.state.email, password: this.state.password})
             let token = auth.data.token
-            await AsyncStorage.setItem('token', token)
+            await storageData.saveKey('token', token)
         } catch(e) {
             alert(e.response.data.message)
         }
