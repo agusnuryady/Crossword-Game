@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 import Axios from 'axios'
 import LinearGradient from 'react-native-linear-gradient'
 import styles from './styles'
-import {storageData} from '../../utils'
+//import {storageData} from '../../utils'
 
 const Global = require('../../component/Global')
 const url = Global.URL
@@ -14,6 +14,8 @@ const url = Global.URL
 var {width,height}=Dimensions.get('window')
 
 export default class SplashScreen extends Component {
+
+    _isMounted = false
 
     constructor(){
         super()
@@ -23,51 +25,28 @@ export default class SplashScreen extends Component {
     }
 
     componentDidMount() {
-        // AsyncStorage.getItem('tokenJwt', (err, result) => {
-        //     if (result) {
-        //         this.setState({
-        //             token: result
-        //         })
-        //         GetUser = async () => {
-        //             const response = await Axios({
-        //                 method: 'get',
-        //                 headers: {
-        //                     "Authorization": `Bearer ${this.state.token}`,
-        //                     "content-type":"appilcation/json"
-        //                 },
-        //                 url:url+'users/user',
-        //             })
-        //             .then(()=> {
-        //                 goToHome()
-        //             })
-        //         }
-        //         GetUser()
-        //     }
-        //     let time = setTimeout(()=> goToLogin(), 3000)
-            
-        //     goToLogin(time)
-            
-        //     clearTimeout(time)
-            
-        // })
+        this._isMounted = true
 
-
-        this.GoToApp()
+        this.GoToApp(this._isMounted)
         
         clearTimeout(this.GoToApp())
     
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false
     }
 
 
 
     GoToApp = () => {
         setTimeout( async ()=> {
-            let token = await storageData.getKey('token')
-            if (!token) {
+            let token = await AsyncStorage.getItem('token')
+            if (token) {
                 this.props.navigation.dispatch(StackActions.reset({
                     index: 0,
                     actions: [
-                    NavigationActions.navigate({ routeName: 'Auth' })
+                    NavigationActions.navigate({ routeName: 'App' })
                     ],
                 }))
             } else {

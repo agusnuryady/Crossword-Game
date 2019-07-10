@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {StatusBar,View,Text,ScrollView,TextInput,Alert,TouchableOpacity,TouchableWithoutFeedback,Dimensions,Image} from 'react-native'
+import {StatusBar,View,Text,FlatList,ScrollView,TextInput,Alert,TouchableOpacity,TouchableWithoutFeedback,Dimensions,Image} from 'react-native'
 import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation'
 import {Icon,Thumbnail} from  'native-base'
 import AsyncStorage from '@react-native-community/async-storage'
@@ -15,11 +15,45 @@ var {width,height}=Dimensions.get('window')
 
 export default class Home extends Component {
 
-    constructor(){
-        super()
+    _isMounted = false
+
+    constructor(props){
+        super(props)
         this.state={
+            token:"",
+            user:[],
+            crosswordList:[],
             passwordInvisible: true,
         }
+    }
+
+    fetchUser = async (token)=> {
+        let options = {headers: {"Authorization": `Bearer ${token}`}}
+        let result = await Axios.get(`${url}profile`, options)
+        this.setState({user: result.data})
+        console.log(result.data)
+    }
+
+    fetchList = async (token)=> {
+        let options = {headers: {"Authorization": `Bearer ${token}`}}
+        let result = await Axios.get(`${url}crosswords`, options)
+        this.setState({crosswordList: result.data.data})
+        console.log(result.data.data)
+    }
+
+    componentDidMount() {
+        this._isMounted = true
+        AsyncStorage.getItem('token', (err, res) => {
+            if (this._isMounted) {
+                this.setState({token: res})
+                this.fetchUser(res)
+                this.fetchList(res)
+            }
+        })
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false
     }
 
     handleLogout(){
@@ -34,8 +68,8 @@ export default class Home extends Component {
             },
             {
                 text:'Yes', 
-                onPress: async ()=> {
-                    await storageData.removeKey('token')
+                onPress: ()=> {
+                    AsyncStorage.removeItem('token')
                     this.props.navigation.dispatch(StackActions.reset({
                         index: 0,
                         actions: [
@@ -86,12 +120,12 @@ export default class Home extends Component {
                             <View style={styles.usernameBox} >
                                 <View style={styles.usernameitem1} >
                                     <Text style={styles.usernameText1} >
-                                        My Name Is Khan
+                                        {this.state.user.username}
                                     </Text>
                                 </View>
                                 <View style={styles.usernameitem2} >
                                     <Text style={styles.usernameText2} >
-                                        user@email.com
+                                        {this.state.user.email}
                                     </Text>
                                 </View>
                             </View>
@@ -105,52 +139,25 @@ export default class Home extends Component {
                         </Text>
                     </View>
                     <View style={styles.menuItem} >
-                        <TouchableOpacity
-                            onPress={()=>alert('pressed!')}>
-                            <View style={styles.menuItemBox} >
-                                <Thumbnail
-                                    small
-                                    source={require('../../component/img/check-icon.png')}
-                                    style={styles.menuItemThumbnail} />
-                                <Text style={styles.menuItemText} >
-                                    Animal Names
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={()=>alert('pressed!')}>
-                            <View style={styles.menuItemBox} >
-                                <Thumbnail
-                                    small
-                                    style={styles.menuItemThumbnail} />
-                                <Text style={styles.menuItemText} >
-                                    Friend Names
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={()=>alert('pressed!')}>
-                            <View style={styles.menuItemBox} >
-                                <Thumbnail
-                                    small
-                                    source={require('../../component/img/check-icon.png')}
-                                    style={styles.menuItemThumbnail} />
-                                <Text style={styles.menuItemText} >
-                                    Country Names
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={()=>alert('pressed!')}>
-                            <View style={styles.menuItemBox} >
-                                <Thumbnail
-                                    small
-                                    style={styles.menuItemThumbnail} />
-                                <Text style={styles.menuItemText} >
-                                    Food Names
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
+                        
+                        <FlatList
+                            data={this.state.crosswordList}
+                            renderItem={({item}) => (
+                                <TouchableOpacity
+                                    onPress={()=>alert('pressed!')}>
+                                    <View style={styles.menuItemBox} >
+                                        <Thumbnail
+                                            small
+                                            source={item.pivot.is_finished === 1 ? require('../../component/img/check-icon.png') : null}
+                                            style={styles.menuItemThumbnail} />
+                                        <Text style={styles.menuItemText} >
+                                            {item.name}
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
+                            )}
+                            keyExtractor={(item) => { return item.id.toString()}}
+                        />
                     </View>
                 </View>
             </View>

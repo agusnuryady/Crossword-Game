@@ -6,7 +6,8 @@ import AsyncStorage from '@react-native-community/async-storage'
 import Axios from 'axios'
 import LinearGradient from 'react-native-linear-gradient'
 import styles from './styles'
-
+import axios from 'axios'
+import URL from '../../component/Global'
 const Global = require('../../component/Global')
 const url = Global.URL
 
@@ -17,10 +18,54 @@ export default class Register extends Component {
     constructor(){
         super()
         this.state={
+            email:'',
+            username:'',
+            password:'',
             passwordInvisible: true,
+            isEmailValid:true,
+            isUsernameValid:true,
+            isPasswordValid:true,
         }
     }
-
+    async _handlingRegister() {
+        try {
+          const response = await axios.post(`${URL.URL}register`,{
+              email:this.state.email,
+              password:this.state.password,
+              username:this.state.username
+          });
+          if(response.status == 200){
+            console.log(response)
+            AsyncStorage.setItem('token',response.data.token)
+            this.props.navigation.dispatch(StackActions.reset({
+                index: 0,
+                actions: [
+                  NavigationActions.navigate({ routeName: 'Gameboards' })
+                ],
+              }))
+              
+          }
+        } catch (error) {
+            
+                console.log(error.response);
+                if(error.response.data.some(data=>data.field=="email")){
+                  this.setState({isEmailValid:false})
+              }else{
+                  this.setState({isEmailValid:true})
+              }
+              if(error.response.data.some(data=>data.field=="username")){
+                  this.setState({isUsernameValid:false})
+              }else{
+                  this.setState({isUsernameValid:true})
+              }
+              if(error.response.data.some(data=>data.field=="password")){
+                  this.setState({isPasswordValid:false})
+              }else{
+                  this.setState({isPasswordValid:true})
+              }
+            }
+        
+      }
     render() {
         return (
             <LinearGradient
@@ -48,24 +93,24 @@ export default class Register extends Component {
                             </Text>
                         </View>
                         <View style={styles.contentItem2} >
-                            <View style={styles.inputBox} >
+                            <View style={(this.state.isEmailValid===false) ? [styles.inputBox,{borderColor:'red',borderWidth:1}] : styles.inputBox} >
                             <TextInput 
                                 style={styles.inputText}
                                 placeholder='Email' 
-                                placeholderTextColor= '#D9EDF0' />
+                                placeholderTextColor= '#D9EDF0' onChangeText={(email)=>{this.setState({email})}} />
                             </View>
-                            <View style={styles.inputBox} >
+                            <View style={(this.state.isUsernameValid===false) ? [styles.inputBox,{borderColor:'red',borderWidth:1}] : styles.inputBox} >
                             <TextInput 
                                 style={styles.inputText}
                                 placeholder='Username' 
-                                placeholderTextColor= '#D9EDF0' />
+                                placeholderTextColor= '#D9EDF0' onChangeText={(username)=>{this.setState({username})}} />
                             </View>
-                            <View style={styles.inputBox} >
+                            <View style={(this.state.isPasswordValid===false) ? [styles.inputBox,{borderColor:'red',borderWidth:1}] : styles.inputBox} >
                                 <TextInput 
                                     style={styles.inputText2}
                                     secureTextEntry= {this.state.passwordInvisible}
                                     placeholder='Password' 
-                                    placeholderTextColor= '#D9EDF0' />
+                                    placeholderTextColor= '#D9EDF0' onChangeText={(password)=>{this.setState({password})}} />
                                 <TouchableOpacity
                                     style={styles.iconBox}
                                     onPress={()=> this.setState({passwordInvisible: !this.state.passwordInvisible})}
@@ -76,7 +121,7 @@ export default class Register extends Component {
                                 </TouchableOpacity>
                             </View>
                             <TouchableOpacity
-                                onPress={ ()=> this.props.navigation.navigate('Login') }
+                                onPress={ ()=> this._handlingRegister() }
                                 style={styles.inputBox2} >
                                 <Text style={styles.iconItem2} >
                                     REGISTER NOW
