@@ -1,5 +1,5 @@
-import storageData from './storageAsync';
+// import storageData from './storageAsync';
 
-export {
-  storageData
-}
+// export {
+//   storageData
+// }
