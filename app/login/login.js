@@ -3,7 +3,7 @@ import {StatusBar,View,Text,TextInput,Alert,TouchableOpacity,TouchableWithoutFee
 import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation'
 import {Icon} from  'native-base'
 import AsyncStorage from '@react-native-community/async-storage'
-import Axios from 'axios'
+import axios from 'axios'
 import LinearGradient from 'react-native-linear-gradient'
 import styles from './styles'
 
@@ -21,16 +21,42 @@ export default class Login extends Component {
         }
     }
 
+    _loginHandler = async () => {
+        if(!this.validation()) {
+            return null
+        }
+
+        try {
+            let auth = await axios.post(`${url}login`, {email: this.state.email, password: this.state.password})
+            let token = auth.data.token
+            await AsyncStorage.setItem('token', token)
+        } catch(e) {
+            alert(e.response.data.message)
+        }
+    }
+
+    validation = () => {
+        if(this.state.email == '') {
+            alert('email harus diisi')
+            return false
+        }else if(this.state.password == '') {
+            alert('password harus diisi')
+            return false
+        }
+
+        return true
+    }
+
     render() {
         return (
             <LinearGradient
-                start={{x: 1.5, y: 0.3}} 
+                start={{x: 1.5, y: 0.3}}
                 end={{x: 0.5, y: 1.4}}
                 colors={[
-                    "#fde0a4","#ffdd8a","#ffda6e","#ffdb6e","#ffdc6e","#ffdd6e","#ffe28b","#ffe7a6", 
-                    // "#fdedc1", 
+                    "#fde0a4","#ffdd8a","#ffda6e","#ffdb6e","#ffdc6e","#ffdd6e","#ffe28b","#ffe7a6",
+                    // "#fdedc1",
                     // "#fbf2dc",
-                ]} 
+                ]}
                 style={styles.container} >
                 <View style={styles.content} >
                     <StatusBar backgroundColor='#fde0a4' barStyle='dark-content'/>
@@ -44,35 +70,32 @@ export default class Login extends Component {
                     </View>
                     <View style={styles.contentItem2} >
                         <View style={styles.inputBox} >
-                        <TextInput 
+                        <TextInput
                             style={styles.inputText}
-                            placeholder='Email' 
-                            placeholderTextColor= 'gray' />
+                            placeholder='Email'
+                            placeholderTextColor= 'gray'
+                            value={this.state.email}
+                            onChangeText={(text) => this.setState({email: text})} />
                         </View>
                         <View style={styles.inputBox} >
-                            <TextInput 
+                            <TextInput
                                 style={styles.inputText2}
                                 secureTextEntry= {this.state.passwordInvisible}
-                                placeholder='Password' 
-                                placeholderTextColor= 'gray' />
+                                placeholder='Password'
+                                placeholderTextColor= 'gray'
+                                value={this.state.password}
+                                onChangeText={(text) => this.setState({password: text})} />
                             <TouchableOpacity
                                 style={styles.iconBox}
-                                onPress={()=> this.setState({passwordInvisible: !this.state.passwordInvisible})}
+                                onPress={() => this.setState({passwordInvisible: !this.state.passwordInvisible})}
                             >
-                                <Icon 
-                                    name={this.state.passwordInvisible === true ? 'eye-with-line': 'eye'} 
+                                <Icon
+                                    name={this.state.passwordInvisible === true ? 'eye-with-line': 'eye'}
                                     type='Entypo' style={styles.iconItem} />
                             </TouchableOpacity>
                         </View>
                         <TouchableOpacity
-                            onPress={ ()=> {
-                                this.props.navigation.dispatch(StackActions.reset({
-                                    index: 0,
-                                    actions: [
-                                    NavigationActions.navigate({ routeName: 'Home' })
-                                    ],
-                                }))
-                            } }
+                            onPress={this._loginHandler}
                             style={styles.inputBox2} >
                             <Text style={styles.iconItem2} >
                                 LOGIN
@@ -82,8 +105,8 @@ export default class Login extends Component {
                             <Text style={styles.text2} >
                                 Not registered?
                             </Text>
-                            <TouchableOpacity 
-                                onPress={ ()=> this.props.navigation.navigate('Register') }
+                            <TouchableOpacity
+                                onPress={ () => this.props.navigation.navigate('Register') }
                                 style={styles.inputBox3} >
                                 <Text style={styles.text3} >
                                     Create an account
