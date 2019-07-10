@@ -29,7 +29,7 @@ const AuthStack = createStackNavigator({
   },
 })
 
-const RootNavigator = createSwitchNavigator(
+const RootNavigator = createStackNavigator(
   {
     Load: SplashScreen,
     Auth: AuthStack,

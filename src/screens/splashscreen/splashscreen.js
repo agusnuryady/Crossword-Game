@@ -63,18 +63,18 @@ export default class SplashScreen extends Component {
     GoToApp = () => {
         setTimeout( async ()=> {
             let token = await storageData.getKey('token')
-            if (token) {
+            if (!token) {
                 this.props.navigation.dispatch(StackActions.reset({
                     index: 0,
                     actions: [
-                    NavigationActions.navigate({ routeName: 'Home' })
+                    NavigationActions.navigate({ routeName: 'Auth' })
                     ],
                 }))
             } else {
                 this.props.navigation.dispatch(StackActions.reset({
                     index: 0,
                     actions: [
-                    NavigationActions.navigate({ routeName: 'Login' })
+                    NavigationActions.navigate({ routeName: 'App' })
                     ],
                 }))
             }
