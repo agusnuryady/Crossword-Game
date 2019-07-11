@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {StatusBar,View,Text,ScrollView,TextInput,Alert,TouchableOpacity,TouchableWithoutFeedback,Dimensions,Image} from 'react-native'
 import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation'
-import {Icon,Thumbnail} from  'native-base'
+import {Icon,Thumbnail} from 'native-base'
 import AsyncStorage from '@react-native-community/async-storage'
 import Axios from 'axios'
 import LinearGradient from 'react-native-linear-gradient'
@@ -33,8 +33,8 @@ export default class Home extends Component {
                 style: 'cancel',
             },
             {
-                text:'Yes', 
-                onPress: async ()=> {
+                text:'Yes',
+                onPress: async () => {
                     await storageData.removeKey('token')
                     this.props.navigation.dispatch(StackActions.reset({
                         index: 0,
@@ -42,7 +42,7 @@ export default class Home extends Component {
                         NavigationActions.navigate({ routeName: 'Login' })
                         ],
                     }))
-                } 
+                }
             },
         ],
         {cancelable:false},
@@ -53,12 +53,12 @@ export default class Home extends Component {
         return (
             <View style={styles.container} >
                 <LinearGradient
-                    start={{x: 1.5, y: 0.3}} 
+                    start={{x: 1.5, y: 0.3}}
                     end={{x: 0.5, y: 1.4}}
                     colors={[
-                        "#f8d153", "#f8d463", "#f8d671", "#ddd975", 
+                        "#f8d153", "#f8d463", "#f8d671", "#ddd975",
                         "#a9db8b", "#65d6a7", "#00cdc9", "#00bee4", "#30abed"
-                    ]} 
+                    ]}
                     style={{height:475}} >
                     <View>
                         <StatusBar backgroundColor='white' barStyle='dark-content'/>
@@ -71,8 +71,8 @@ export default class Home extends Component {
                                     CROSSWORD PUZZLE
                                 </Text>
                             </View>
-                            <TouchableOpacity 
-                                onPress={()=> this.handleLogout()}
+                            <TouchableOpacity
+                                onPress={() => this.handleLogout()}
                                 style={styles.headerButton} >
                                 <Icon name='logout' type='AntDesign' style={styles.headerButtonIcon} />
                             </TouchableOpacity>
@@ -106,7 +106,7 @@ export default class Home extends Component {
                     </View>
                     <View style={styles.menuItem} >
                         <TouchableOpacity
-                            onPress={()=>alert('pressed!')}>
+                            onPress={() =>alert('pressed!')}>
                             <View style={styles.menuItemBox} >
                                 <Thumbnail
                                     small
@@ -118,7 +118,7 @@ export default class Home extends Component {
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={()=>alert('pressed!')}>
+                            onPress={() =>alert('pressed!')}>
                             <View style={styles.menuItemBox} >
                                 <Thumbnail
                                     small
@@ -129,7 +129,7 @@ export default class Home extends Component {
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={()=>alert('pressed!')}>
+                            onPress={() =>alert('pressed!')}>
                             <View style={styles.menuItemBox} >
                                 <Thumbnail
                                     small
@@ -141,7 +141,7 @@ export default class Home extends Component {
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={()=>alert('pressed!')}>
+                            onPress={() =>alert('pressed!')}>
                             <View style={styles.menuItemBox} >
                                 <Thumbnail
                                     small

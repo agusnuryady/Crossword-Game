@@ -27,10 +27,10 @@ const styles = StyleSheet.create({
         fontSize:25
     },
     header: {
-        width:width, 
-        elevation:5, 
+        width:width,
+        elevation:5,
         borderBottomRightRadius:0,
-        borderBottomLeftRadius:80, 
+        borderBottomLeftRadius:80,
         backgroundColor:'rgba(255,255,255,0.95)'
     },
     headerBox: {
@@ -51,8 +51,8 @@ const styles = StyleSheet.create({
         paddingVertical:10
     },
     avatar: {
-        width: 100, 
-        height: 100, 
+        width: 100,
+        height: 100,
         borderRadius: 50,
         borderWidth:2,
         borderColor:'#19FAC2'
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
         fontSize:18,
         fontFamily:'sans-serif-medium'
     },
-    
+
 })
 
 export default styles

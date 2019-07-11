@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {StatusBar,View,Text,TextInput,Alert,TouchableOpacity,TouchableWithoutFeedback,Dimensions,Image} from 'react-native'
+import { connect } from 'react-redux'
 import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation'
 import {Icon} from  'native-base'
 import AsyncStorage from '@react-native-community/async-storage'
@@ -7,16 +8,16 @@ import axios from 'axios'
 import LinearGradient from 'react-native-linear-gradient'
 import styles from './styles'
 import {storageData} from '../../utils'
-
+import * as actionAuth from '../../redux/actions/auth'
 const Global = require('../../component/Global')
 const url = Global.URL
 
 var {width,height}=Dimensions.get('window')
 
-export default class Login extends Component {
+class Login extends Component {
 
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state={
             passwordInvisible: true,
         }
@@ -27,19 +28,24 @@ export default class Login extends Component {
             return null
         }
 
-        try {
-            let auth = await axios.post(`${url}login`, {email: this.state.email, password: this.state.password})
-            let token = auth.data.token
-            await storageData.saveKey('token', token)
-            this.props.navigation.dispatch(StackActions.reset({
-                index: 0,
-                actions: [
-                    NavigationActions.navigate({ routeName: 'Login' })
-                ],
-            }))
+        this.props.login({email: this.state.email, password: this.state.password})
+    }
 
-        } catch(e) {
-            alert(e.response.data.message)
+    _navigate = () => {
+        this.props.navigation.dispatch(StackActions.reset({
+            index: 0,
+            actions: [
+                NavigationActions.navigate({ routeName: 'Load' })
+            ],
+        }))
+    }
+
+    _loginChecker = () => {
+        if(this.props.auth.isLoggedIn) {
+            this._navigate()
+        }else if(this.props.auth.isError) {
+            alert(this.props.auth.data)
+            this.props.auth.isError = false
         }
     }
 
@@ -56,6 +62,7 @@ export default class Login extends Component {
     }
 
     render() {
+        this._loginChecker()
         return (
             <LinearGradient
                 start={{x: 1.5, y: 0.3}}
@@ -127,3 +134,17 @@ export default class Login extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        auth: state.auth
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        login: user => dispatch(actionAuth.login(user))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

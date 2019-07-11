@@ -23,42 +23,8 @@ export default class SplashScreen extends Component {
     }
 
     componentDidMount() {
-        // AsyncStorage.getItem('tokenJwt', (err, result) => {
-        //     if (result) {
-        //         this.setState({
-        //             token: result
-        //         })
-        //         GetUser = async () => {
-        //             const response = await Axios({
-        //                 method: 'get',
-        //                 headers: {
-        //                     "Authorization": `Bearer ${this.state.token}`,
-        //                     "content-type":"appilcation/json"
-        //                 },
-        //                 url:url+'users/user',
-        //             })
-        //             .then(()=> {
-        //                 goToHome()
-        //             })
-        //         }
-        //         GetUser()
-        //     }
-        //     let time = setTimeout(()=> goToLogin(), 3000)
-            
-        //     goToLogin(time)
-            
-        //     clearTimeout(time)
-            
-        // })
-
-
         this.GoToApp()
-        
-        clearTimeout(this.GoToApp())
-    
     }
-
-
 
     GoToApp = () => {
         setTimeout( async ()=> {
@@ -66,32 +32,28 @@ export default class SplashScreen extends Component {
             if (!token) {
                 this.props.navigation.dispatch(StackActions.reset({
                     index: 0,
-                    actions: [
-                    NavigationActions.navigate({ routeName: 'Auth' })
-                    ],
+                    actions: [NavigationActions.navigate({ routeName: 'Auth' })],
                 }))
             } else {
                 this.props.navigation.dispatch(StackActions.reset({
                     index: 0,
-                    actions: [
-                    NavigationActions.navigate({ routeName: 'App' })
-                    ],
+                    actions: [NavigationActions.navigate({ routeName: 'App' })],
                 }))
             }
         }, 2000)
     }
-    
+
     render() {
         return(
             <LinearGradient
-                start={{x: 1.5, y: 0.3}} 
+                start={{x: 1.5, y: 0.3}}
                 end={{x: 0.5, y: 1.4}}
                 colors={[
                     "#f2e8d8","#f9e4be","#fde0a4","#fde0a4","#ffdd8a","#ffe28b","#ffe7a6","#fdedc1","#fbf2dc",
-                    
-                    "#daedf0","#b5dee9","#91cde6","#6fbce5","#50a9e4","#47a5e3","#3ea2e2","#339ee1","#40a9e0", 
+
+                    "#daedf0","#b5dee9","#91cde6","#6fbce5","#50a9e4","#47a5e3","#3ea2e2","#339ee1","#40a9e0",
                     "#53b4de","#68bedc","#7fc7da"
-                ]} 
+                ]}
                 style={styles.container} >
                 <View style={styles.content} >
                     <View style={styles.contentItem} >

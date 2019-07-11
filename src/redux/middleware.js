@@ -9,11 +9,8 @@ const reactNavigation = createReactNavigationReduxMiddleware(
   state => state.router,
 )
 
+middlewares.push(createLogger())
 middlewares.push(reactNavigation)
-
-const logger = createLogger()
-middlewares.push(logger)
-
 middlewares.push(promise)
 
 export default middlewares;
