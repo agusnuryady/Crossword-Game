@@ -156,7 +156,9 @@ export default class Home extends Component {
             <FlatList
               data={this.state.crosswordList}
               renderItem={({ item }) => (
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('Crossword')}>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate('Crossword', { id: item.id })}
+                >
                   <View style={styles.menuItemBox}>
                     <Thumbnail
                       small
