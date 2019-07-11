@@ -29,43 +29,43 @@ export default class Register extends Component {
     }
     async _handlingRegister() {
         try {
-          const response = await axios.post(`${URL.URL}register`,{
-              email:this.state.email,
-              password:this.state.password,
-              username:this.state.username
-          });
-          if(response.status == 200){
-            console.log(response)
-            AsyncStorage.setItem('token',response.data.token)
-            this.props.navigation.dispatch(StackActions.reset({
-                index: 0,
-                actions: [
-                  NavigationActions.navigate({ routeName: 'Gameboards' })
-                ],
-              }))
-              
-          }
+            const response = await axios.post(`${URL.URL}register`,{
+                email:this.state.email,
+                password:this.state.password,
+                username:this.state.username
+            });
+            if(response.status == 200){
+                console.log(response)
+                AsyncStorage.setItem('token',response.data.token)
+                this.props.navigation.dispatch(StackActions.reset({
+                    index: 0,
+                    actions: [
+                    NavigationActions.navigate({ routeName: 'Home' })
+                    ],
+                }))
+                
+            }
         } catch (error) {
             
-                console.log(error.response);
-                if(error.response.data.some(data=>data.field=="email")){
-                  this.setState({isEmailValid:false})
-              }else{
-                  this.setState({isEmailValid:true})
-              }
-              if(error.response.data.some(data=>data.field=="username")){
-                  this.setState({isUsernameValid:false})
-              }else{
-                  this.setState({isUsernameValid:true})
-              }
-              if(error.response.data.some(data=>data.field=="password")){
-                  this.setState({isPasswordValid:false})
-              }else{
-                  this.setState({isPasswordValid:true})
-              }
+            console.log(error.response);
+            if(error.response.data.some(data=>data.field=="email")){
+            this.setState({isEmailValid:false})
+            }else{
+                this.setState({isEmailValid:true})
             }
+            if(error.response.data.some(data=>data.field=="username")){
+                this.setState({isUsernameValid:false})
+            }else{
+                this.setState({isUsernameValid:true})
+            }
+            if(error.response.data.some(data=>data.field=="password")){
+                this.setState({isPasswordValid:false})
+            }else{
+                this.setState({isPasswordValid:true})
+            }
+        }
         
-      }
+    }
     render() {
         return (
             <LinearGradient

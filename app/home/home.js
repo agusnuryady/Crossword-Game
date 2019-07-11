@@ -31,14 +31,12 @@ export default class Home extends Component {
         let options = {headers: {"Authorization": `Bearer ${token}`}}
         let result = await Axios.get(`${url}profile`, options)
         this.setState({user: result.data})
-        console.log(result.data)
     }
 
     fetchList = async (token)=> {
         let options = {headers: {"Authorization": `Bearer ${token}`}}
         let result = await Axios.get(`${url}crosswords`, options)
         this.setState({crosswordList: result.data.data})
-        console.log(result.data.data)
     }
 
     componentDidMount() {
@@ -144,7 +142,7 @@ export default class Home extends Component {
                             data={this.state.crosswordList}
                             renderItem={({item}) => (
                                 <TouchableOpacity
-                                    onPress={()=>alert('pressed!')}>
+                                    onPress={()=> this.props.navigation.navigate('Crossword')}>
                                     <View style={styles.menuItemBox} >
                                         <Thumbnail
                                             small

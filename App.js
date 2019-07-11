@@ -5,6 +5,7 @@ import Login from './app/login/login'
 import Register from './app/register/register'
 import Home from './app/home/home'
 import Gameboards from './app/gameboards/gameboards'
+import Crossword from './app/game/crossword'
 
 const AppNavigator = createStackNavigator({
   SplashScreen: {
@@ -27,6 +28,10 @@ const AppNavigator = createStackNavigator({
     screen: Gameboards,
     navigationOptions: {header: null}
   },
+  Crossword: {
+    screen: Crossword,
+    navigationOptions: {header: null}
+  },
 }, {
     initialRouteName: 'SplashScreen',
 })
@@ -36,7 +41,7 @@ const ShowScreen = createAppContainer(AppNavigator)
 export default class App extends Component {
   render() {
     return (
-      <Gameboards/>
+      <ShowScreen/>
     )
   }
 }
