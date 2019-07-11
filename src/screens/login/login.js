@@ -9,6 +9,7 @@ import LinearGradient from 'react-native-linear-gradient'
 import styles from './styles'
 import {storageData} from '../../utils'
 import * as actionAuth from '../../redux/actions/auth'
+
 const Global = require('../../component/Global')
 const url = Global.URL
 
@@ -19,6 +20,8 @@ class Login extends Component {
     constructor(props){
         super(props)
         this.state={
+            email:"",
+            password:"",
             passwordInvisible: true,
         }
     }
@@ -35,7 +38,7 @@ class Login extends Component {
         this.props.navigation.dispatch(StackActions.reset({
             index: 0,
             actions: [
-                NavigationActions.navigate({ routeName: 'Load' })
+                NavigationActions.navigate({ routeName: 'App' })
             ],
         }))
     }
