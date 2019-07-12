@@ -106,12 +106,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   inputBox1: {
-    borderColor: '#898D44',
-    borderWidth: 0.5,
-    padding: 5,
-    fontSize: 22,
+    padding:1,
+    fontSize: 25,
     textAlign: 'center',
-    height: 56
   },
   inputBox2: {
     backgroundColor: '#627C66',
@@ -161,9 +158,20 @@ const styles = StyleSheet.create({
   buttonBox: {
     flexDirection: 'row',
     elevation: 2,
+    marginHorizontal:20,
     padding: 10,
     borderRadius: 50,
     backgroundColor: '#20DD3A',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  buttonBox2: {
+    flexDirection: 'row',
+    elevation: 2,
+    marginHorizontal:20,
+    padding: 10,
+    borderRadius: 50,
+    backgroundColor: '#1FD6EC',
     justifyContent: 'center',
     alignItems: 'center'
   },

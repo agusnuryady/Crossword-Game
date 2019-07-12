@@ -35,12 +35,13 @@ class Login extends Component {
     }
 
     _navigate = () => {
-        this.props.navigation.dispatch(StackActions.reset({
-            index: 0,
-            actions: [
-                NavigationActions.navigate({ routeName: 'App' })
-            ],
-        }))
+        this.props.navigation.navigate({ routeName: 'App' })
+        // dispatch(StackActions.reset({
+        //     index: 0,
+        //     actions: [
+        //         NavigationActions.navigate({ routeName: 'App' })
+        //     ],
+        // }))
     }
 
     _loginChecker = () => {

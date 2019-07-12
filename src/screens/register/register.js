@@ -29,21 +29,21 @@ export default class Register extends Component {
 
     async _handlingRegister() {
         try {
-          const response = await axios.post(`${URL.URL}register`,{
-              email:this.state.email,
-              password:this.state.password,
-              username:this.state.username
-          });
-          if(response.status == 200){
-            console.log(response)
-            AsyncStorage.setItem('token',response.data.token)
-            this.props.navigation.dispatch(StackActions.reset({
-                index: 0,
-                actions: [
-                  NavigationActions.navigate({ routeName: 'Gameboards' })
-                ],
-              }))
-          }
+            const response = await axios.post(`${URL.URL}register`,{
+                email:this.state.email,
+                password:this.state.password,
+                username:this.state.username
+            });
+            if(response.status == 200){
+                console.log(response)
+                AsyncStorage.setItem('token',response.data.token)
+                this.props.navigation.dispatch(StackActions.reset({
+                    index: 0,
+                    actions: [
+                    NavigationActions.navigate({ routeName: 'Gameboards' })
+                    ],
+                }))
+            }
         } catch (error) {
             if(error.response.data.some(data=>data.field=="email")){
                 this.setState({isEmailValid:false})
@@ -126,6 +126,18 @@ export default class Register extends Component {
                                     REGISTER NOW
                                 </Text>
                             </TouchableOpacity>
+                            <View style={styles.contentItem3} >
+                            <Text style={styles.text2} >
+                                Already have account?
+                            </Text>
+                            <TouchableOpacity
+                                onPress={ () => this.props.navigation.navigate('Login') }
+                                style={styles.inputBox3} >
+                                <Text style={styles.text3} >
+                                    Sign In
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
                         </View>
                     </View>
                 </View>

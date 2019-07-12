@@ -24,10 +24,11 @@ import axios from 'axios';
 import LinearGradient from 'react-native-linear-gradient';
 import styles from './styles';
 import URL from '../../component/Global';
+import {connect} from 'react-redux'
 
 var { width, height } = Dimensions.get('window');
 
-export default class Crossword extends Component {
+class Crossword extends Component {
   _isMounted = false;
 
   constructor(props) {
@@ -254,18 +255,21 @@ export default class Crossword extends Component {
                 renderItem={({ item }) => {
                   if (this.state.listFix.includes(item.key)) {
                     return (
-                      <Input
-                        autoCapitalize="characters"
-                        maxLength={1}
-                        value={this.state[item.key]}
-                        onFocus={() => {
-                          this._LihatSoal(item.key);
-                        }}
-                        onChangeText={answer => {
-                          this.handleInput(item.key, answer);
-                        }}
-                        style={styles.inputBox1}
-                      />
+                      <View style={{flexDirection:'column',justifyContent:'center',borderColor:'#898D44',borderWidth: 0.5,height: 56,width:58.35,padding:5}} >
+                        <Text style={{fontSize:13}} >1</Text>
+                        <Input
+                          autoCapitalize="characters"
+                          maxLength={1}
+                          value={this.state[item.key]}
+                          onFocus={() => {
+                            this._LihatSoal(item.key);
+                          }}
+                          onChangeText={answer => {
+                            this.handleInput(item.key, answer);
+                          }}
+                          style={styles.inputBox1}
+                        />
+                      </View>
                     );
                   } else {
                     return <Input disabled style={styles.inputBox2} />;
@@ -274,7 +278,10 @@ export default class Crossword extends Component {
                 }}
               />
             </View>
-            <View style={{ margin: 20 }}>
+            <View style={{ margin: 20,flexDirection:'row' }}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')} style={styles.buttonBox2}>
+                <Text style={styles.buttonText}>Main Menu</Text>
+              </TouchableOpacity>
               <TouchableOpacity onPress={() => this.getInputData()} style={styles.buttonBox}>
                 <Thumbnail
                   source={require('../../component/img/check-icon.png')}
@@ -289,3 +296,9 @@ export default class Crossword extends Component {
     );
   }
 }
+
+const mapStateProps = (state) => (
+  {}
+)
+
+export default connect(mapStateProps)(Crossword)
